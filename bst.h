@@ -468,7 +468,7 @@ void BinarySearchTree<Key, Value>::insert(const std::pair<const Key, Value> &key
           current->setLeft(new Node<Key, Value>(keyValuePair.first, keyValuePair.second, current));
           return;
         }
-        current = current->getRight();
+        current = current->getLeft();
       }
       else if ( current->getKey() <keyValuePair.first){
         if (current->getRight() == nullptr) {
@@ -570,7 +570,7 @@ BinarySearchTree<Key, Value>::successor(Node<Key, Value>* current)
     }
     Node<Key, Value>* parent = current->getParent();
 
-    while (parent != nullptr && current == parent->getLeft()){
+    while (parent != nullptr && current == parent->getRight()){
       current = parent;
       parent = parent->getParent();
     }

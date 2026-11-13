@@ -15,12 +15,10 @@ bool pathLength(Node* node, int length, int& leafLength){ // need to keep leaf l
       return true;
     }
   if ((node->right == nullptr) &&(node->left == nullptr)){
-    if (leafLength = -1){ // only first iteration
+    if (leafLength == -1){ // only first iteration
       leafLength = length;
     }
-  }
-  if (length = leafLength){
-    return true;
+  return (length == leafLength);
   }
   return pathLength(node->left, length + 1, leafLength) && pathLength(node->right, length +1, leafLength);
 }

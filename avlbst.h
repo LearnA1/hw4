@@ -262,7 +262,7 @@ void AVLTree<Key, Value>:: remove(const Key& key)
       if ((parent->getBalance() == -1) || (parent->getBalance() == 1)) {
         return;
       }
-      if ((parent->getBalance() == -2) || (parent->getBalance() == -2)) {
+      if ((parent->getBalance() == -2) || (parent->getBalance() == 2)) {
         subtreeRoot = rebalance(parent);
 
         if (subtreeRoot->getBalance() != 0) {
@@ -323,10 +323,10 @@ AVLNode<Key, Value>* AVLTree<Key, Value>::rotateLeft(AVLNode<Key, Value>* node){
 }
 template<class Key, class Value>
 AVLNode<Key, Value>* AVLTree<Key, Value>::rotateRight(AVLNode<Key, Value>* node){
+  
   AVLNode<Key, Value>* promoted = node->getLeft();
   AVLNode<Key, Value>* middle = promoted->getRight();
   AVLNode<Key, Value>* parent = node->getParent();
-
   promoted->setParent(parent);
 
   if (parent == nullptr) {
@@ -338,7 +338,7 @@ AVLNode<Key, Value>* AVLTree<Key, Value>::rotateRight(AVLNode<Key, Value>* node)
   else{
     parent->setRight(promoted);
   }
-  node->setRight(middle);
+  node->setLeft(middle);
 
   if (middle != nullptr) {
     middle->setParent(node);
@@ -349,9 +349,9 @@ AVLNode<Key, Value>* AVLTree<Key, Value>::rotateRight(AVLNode<Key, Value>* node)
 
   int nodeBalance = node->getBalance();
   int promotedBalance = promoted->getBalance();
-  nodeBalance = nodeBalance + 1 - std::max(promotedBalance, 0);
+  nodeBalance = nodeBalance + 1 - std::min(promotedBalance, 0);
 
-  promotedBalance = promotedBalance + 1 + std::min(nodeBalance, 0);
+  promotedBalance = promotedBalance + 1 + std::max(nodeBalance, 0);
 
   node->setBalance(nodeBalance);
   promoted->setBalance(promotedBalance);
